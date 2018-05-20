@@ -263,27 +263,49 @@ class Song extends React.Component {
 //		playcount: {this.props.song.entity.playcount}
 //<div className="seq-model">
 
+/*<div>
+	<table>
+		<tbody>
+			<tr>
+				<td>
+					<figure>
+						<img src={"cover?id=" + this.props.song.entity.albumid} alt={this.props.song.entity.albumid} height='150px' width='150px'  />
+					</figure>
+				</td>
+				<td>
+					<p>{this.props.status}</p>
+					<p>{this.props.song.entity.tracknumber}: {this.props.song.entity.name}</p>
+					<p>{this.props.song.entity.album}</p>
+					<p>{this.props.song.entity.artist}</p>
+					<p>{this.props.song.entity.songyear}</p>
+				</td>
+			</tr>
+		</tbody>
+	</table>
+</div>
+*/
 		return (
-				<div>
-					<table>
-						<tbody>
-							<tr>
-								<td>
+			<div >
+					<ul>
+						<li>
+						<div className="col-md-4">
 									<figure>
-									  <img src={"cover?id=" + this.props.song.entity.albumid} alt={this.props.song.entity.albumid} height='150px' width='150px'  />
+									  <img src={"cover?id=" + this.props.song.entity.albumid} alt={this.props.song.entity.albumid} height='200px' width='200px'  />
 									</figure>
-								</td>
-								<td>
+						</div>
+						<div className="col-md-4">
 								  <p>{this.props.status}</p>
 									<p>{this.props.song.entity.tracknumber}: {this.props.song.entity.name}</p>
 									<p>{this.props.song.entity.album}</p>
 									<p>{this.props.song.entity.artist}</p>
 									<p>{this.props.song.entity.songyear}</p>
-								</td>
-							</tr>
-						</tbody>
-					</table>
-				</div>
+						</div>
+						</li>
+					</ul>
+
+			</div>
+
+
 		)
 	}
 }

@@ -255,18 +255,18 @@ class PlayQList extends React.Component {
 		);
 
 		var navLinks = [];
-//		if ("first" in this.props.links) {
+		if ("first" in this.props.links) {
 			navLinks.push(<button key="first" onClick={this.handleNavFirst}>&lt;&lt;</button>);
-//		}
-//		if ("prev" in this.props.links) {
+		}
+		if ("prev" in this.props.links) {
 			navLinks.push(<button key="prev" onClick={this.handleNavPrev}>&lt;</button>);
-//		}
-//		if ("next" in this.props.links) {
+		}
+		if ("next" in this.props.links) {
 			navLinks.push(<button key="next" onClick={this.handleNavNext}>&gt;</button>);
-//		}
-//		if ("last" in this.props.links) {
+		}
+		if ("last" in this.props.links) {
 			navLinks.push(<button key="last" onClick={this.handleNavLast}>&gt;&gt;</button>);
-//		}
+		}
 
 		return (
 			<div>

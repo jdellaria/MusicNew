@@ -340,10 +340,14 @@ class AlbumList extends React.Component {
   <section id="aa-product">
     <div className="container">
       <div className="row">
+			<CurrentInQ/>
         <div className="col-md-12">
+
           <div className="row">
+
             <div className="aa-product-area">
-							<CurrentInQ/>
+
+
 
 							<div class="aa-search-box">
 								{pageInfo}
@@ -354,6 +358,7 @@ class AlbumList extends React.Component {
 							</div>
 
               <div className="aa-product-inner">
+
                 <ul className="nav nav-tabs aa-products-tab">
 
                   <li className="active"><a href="#Added" data-toggle="tab" onClick={() => this.props.onDataCellClick(1)}>Date Added <i className={this.props.onDataCellClickCarat(1)}></i></a></li>
