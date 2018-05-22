@@ -9,16 +9,54 @@ import follow from'./follow'; // function to hop multiple links by "rel"
 
 import stompClient from './websocket-listener';
 import CurrentInQ from './currentInQ'
+import Slider from 'rc-slider';
 
+//import 'bootstrap/dist/css/bootstrap.min.css'
+import 'rc-slider/assets/index.css';
+//import 'rc-slider/dist/rc-slider.css';
 //const root = '/api';
 const root = '/api/albums/search';
+
+
+
+class PlayPauseButton extends React.Component {
+  constructor (props, context) {
+    super(props, context)
+    this.state = {
+      varPlay: true
+    }
+    this.handleChangeHorizontal = this.handleChangeHorizontal.bind(this);
+  }
+
+  handleChangeHorizontal(value)  {
+    this.setState({
+      horizontal: value
+    })
+  };
+
+
+  render () {
+    if(this.props.play)
+    {
+      return (
+        <i className="fa fa-play fa-2x fa-fw" id="musicplay" aria-hidden="true"></i>
+      )
+    }
+    else
+      {
+        return (
+        <i className="fa fa-pause fa-2x fa-fw" id="musicpause" aria-hidden="true"></i>
+      )
+      }
+    }
+}
 
 class AlbumDisplay extends React.Component {
 
 	constructor(props) {
 		super(props);
 //		this.state = {albums: [], attributes: [], page: 1, pageSize: 8, links: {}};
-		this.state = {albums: [], cellSelected: [], attributes: [], searchBy:'findByAlbumContainingIgnoreCaseOrArtistnameContainingIgnoreCase', page: 1, artistname: '', pageSize: 8, sort:"dateAdded,desc", links: {}};
+		this.state = {albums: [], horizontal: 100, cellSelected: [], togglePlayPause:true, attributes: [], searchBy:'findByAlbumContainingIgnoreCaseOrArtistnameContainingIgnoreCase', page: 1, artistname: '', pageSize: 8, sort:"dateAdded,desc", links: {}};
 
 		this.updatePageSize = this.updatePageSize.bind(this);
 		this.onSubmitAlbum = this.onSubmitAlbum.bind(this);
@@ -27,6 +65,10 @@ class AlbumDisplay extends React.Component {
 		this.refreshAndGoToLastPage = this.refreshAndGoToLastPage.bind(this);
 		this.onDataCellClick = this.onDataCellClick.bind(this);
 		this.onDataCellClickCarat = this.onDataCellClickCarat.bind(this);
+		this.togglePlayPause = this.togglePlayPause.bind(this);
+		this.onNextSongClick = this.onNextSongClick.bind(this);
+		this.onNextAlbumClick = this.onNextAlbumClick.bind(this);
+    this.handleChangeHorizontal = this.handleChangeHorizontal.bind(this);
     		console.log("App: constructor");
 	}
 	onDataCellClick(selected) {
@@ -222,8 +264,29 @@ console.log("onDataCellClick mySortBy:" + mySortBy);
 			});
 		});
 	}
-	// end::websocket-handlers[]
+	onNextSongClick()
+	{
+		console.log("HeaderTop: onNextSongClick" );
+	}
 
+	onNextAlbumClick()
+	{
+		console.log("HeaderTop: onNextAlbumClick" );
+	}
+	// end::websocket-handlers[]
+	togglePlayPause() {
+    this.setState({
+      togglePlayPause: !this.state.togglePlayPause
+    });
+    this.state.togglePlayPause = !this.state.togglePlayPause
+    if(this.state.togglePlayPause) //true = Play
+    {
+      console.log("HeaderTop: togglePlayPause Play" );
+    }
+    else {
+      console.log("HeaderTop: togglePlayPause Pause" );
+    }
+  }
 	// tag::register-handlers[]
 	componentDidMount() {
 		this.loadFromServer(this.state.artistname, this.state.pageSize, this.state.sort);
@@ -233,15 +296,43 @@ console.log("onDataCellClick mySortBy:" + mySortBy);
 			{route: '/topic/deleteAlbum', callback: this.refreshCurrentPage}
 		]);
 	}
+
+  handleChangeHorizontal(value) {
+    this.setState({
+      horizontal: value
+    })
+  };
 	// end::register-handlers[]
 //<playQDisplay/>
-//
+//			<i onClick={this.togglePlayPause}><PlayPauseButton play={this.state.togglePlayPause} /></i>
 	render() {
     console.log("App: render");
+    const { horizontal } = this.state
+    const formatPc = p => p + '%'
 
           return (
-			<div>
-
+  <section id="aa-product">
+    <div className="container">
+      <div className="row">
+        <div className="col-md-4">
+          <i onClick={this.togglePlayPause}><PlayPauseButton play={this.state.togglePlayPause} /></i>
+          <i onClick={this.onNextSongClick} className="fa fa-step-forward fa-2x  fa-fw" aria-hidden="true"></i>
+          <i onClick={this.onNextAlbumClick} className="fa fa-fast-forward fa-2x  fa-fw" aria-hidden="true"></i>
+        </div>
+        <div className="col-md-4">
+          <Slider
+            min={0}
+            max={100}
+            value={horizontal}
+            format={formatPc}
+            onChange={this.handleChangeHorizontal}
+          />
+        </div>
+        <div className="col-md-4">
+          <i className="fa fa-volume-up fa-2x fa-fw" aria-hidden="true"></i>
+          {formatPc(horizontal)}
+        </div>
+      </div>
 				<AlbumList page={this.state.page}
 							  albums={this.state.albums}
 							  links={this.state.links}
@@ -259,7 +350,7 @@ console.log("onDataCellClick mySortBy:" + mySortBy);
 								onDataCellClickCarat={this.onDataCellClickCarat}
 								/>
 			</div>
-
+  </section>
          )
 	}
 }
@@ -337,18 +428,12 @@ class AlbumList extends React.Component {
 // playQDisplay
                 return (
 
-  <section id="aa-product">
-    <div className="container">
+
       <div className="row">
 			<CurrentInQ/>
         <div className="col-md-12">
-
           <div className="row">
-
             <div className="aa-product-area">
-
-
-
 							<div class="aa-search-box">
 								{pageInfo}
 								<form action="">
@@ -379,8 +464,8 @@ class AlbumList extends React.Component {
           </div>
         </div>
       </div>
-    </div>
-  </section>
+
+
                 )
 	}
 }
