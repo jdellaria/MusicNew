@@ -60,6 +60,9 @@ class AlbumDisplay extends React.Component {
 
 		this.updatePageSize = this.updatePageSize.bind(this);
 		this.onSubmitAlbum = this.onSubmitAlbum.bind(this);
+		this.onSubmitPlayMode = this.onSubmitPlayMode.bind(this);
+		this.onSubmitVolume = this.onSubmitVolume.bind(this);
+
 		this.onNavigate = this.onNavigate.bind(this);
 		this.refreshCurrentPage = this.refreshCurrentPage.bind(this);
 		this.refreshAndGoToLastPage = this.refreshAndGoToLastPage.bind(this);
@@ -185,6 +188,32 @@ console.log("onDataCellClick mySortBy:" + mySortBy);
 		})
 	}
 
+  onSubmitPlayMode(mode) {
+
+  	console.log("onSubmitPlay: mode=" + mode);
+  	client({
+  		method: 'GET',
+  		path: "playmode?id=" + mode,
+  //			path: "playalbum",
+  //			id: albumID,
+  //			entity: newAlbum,
+  		headers: {'Content-Type': 'application/json'}
+  	})
+  }
+
+	onSubmitVolume(value) {
+
+		console.log("onSubmitVolume: value=" + value);
+		client({
+			method: 'GET',
+			path: "playmode?id=" + value,
+//			path: "playalbum",
+//			id: albumID,
+//			entity: newAlbum,
+			headers: {'Content-Type': 'application/json'}
+		})
+	}
+
 	onNavigate(navUri) {
 		client({
 			method: 'GET',
@@ -267,11 +296,13 @@ console.log("onDataCellClick mySortBy:" + mySortBy);
 	onNextSongClick()
 	{
 		console.log("HeaderTop: onNextSongClick" );
+    this.onSubmitPlayMode("NextSong");
 	}
 
 	onNextAlbumClick()
 	{
 		console.log("HeaderTop: onNextAlbumClick" );
+    this.onSubmitPlayMode("NextAlbum");
 	}
 	// end::websocket-handlers[]
 	togglePlayPause() {
@@ -281,9 +312,11 @@ console.log("onDataCellClick mySortBy:" + mySortBy);
     this.state.togglePlayPause = !this.state.togglePlayPause
     if(this.state.togglePlayPause) //true = Play
     {
+      this.onSubmitPlayMode("Play");
       console.log("HeaderTop: togglePlayPause Play" );
     }
     else {
+      this.onSubmitPlayMode("Pause");
       console.log("HeaderTop: togglePlayPause Pause" );
     }
   }
@@ -301,6 +334,7 @@ console.log("onDataCellClick mySortBy:" + mySortBy);
     this.setState({
       horizontal: value
     })
+    this.onSubmitVolume(value);
   };
 	// end::register-handlers[]
 //<playQDisplay/>
