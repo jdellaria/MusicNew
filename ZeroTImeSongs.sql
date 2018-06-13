@@ -2,6 +2,9 @@ drop table if exists Music.DiffTime;
 drop table if exists Music.ZeroTimeCount;
 drop table if exists Music.ZeroTimeSongs;
 
+/* if this set command is not run the following error will occure "Error Code: 1067. Invalid default value for 'BeginPlayTime'"*/
+SET sql_mode = '';
+
 /* Create table that takes each item in the playq and determintes the amount of time the song actually played. */
 
 
