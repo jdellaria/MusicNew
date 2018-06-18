@@ -59,6 +59,12 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.InputStream;
 
+import java.io.*;
+import java.net.DatagramPacket;
+import java.net.DatagramSocket;
+import java.net.InetAddress;
+
+
 import com.music.models.Album;
 import com.music.models.AlbumDAO;
 import com.music.models.Song;
@@ -184,6 +190,7 @@ public class HomeController {
 		fin.close();
 	}
 
+/* Play Entire Ablum */
 	@RequestMapping(
 	value = "/playalbum",
 	method = RequestMethod.GET)
@@ -218,6 +225,43 @@ public class HomeController {
 //		setSongsinPlayQ(songs);
 
 	}
+
+
+	/* Change The Volume Setting */
+		@RequestMapping(
+		value = "/volume",
+		method = RequestMethod.GET)
+		public void changeVolume(
+			@RequestParam("id") long id,
+			HttpServletResponse response
+			) throws IOException
+		{
+			System.out.println("Jons volume setting is: " + id);
+
+			String targetString = "volume " + id;
+			try
+			{
+							// get a datagram socket
+					DatagramSocket dsocket = new DatagramSocket();
+
+							// send request
+					byte[] buf = {'v', 'o', 'l', 'u', 'm', 'e', 0}; //new byte[256];
+					byte[] volumeByteBuffer = new byte[20] ;
+					volumeByteBuffer = targetString.getBytes();
+//					InetAddress address = InetAddress.getByName("localhost");
+					InetAddress address = InetAddress.getByName("192.168.19.2");
+					DatagramPacket packet = new DatagramPacket(volumeByteBuffer, volumeByteBuffer.length, address, 1234);
+					dsocket.send(packet);
+					dsocket.close();
+
+			}
+			catch (Exception e)
+			{
+					System.err.println("Exception:  " + e);
+			}
+		}
+
+
   // Wire the UserDao used inside this controller.
   @Autowired
  private AlbumDAO albumDAO;
