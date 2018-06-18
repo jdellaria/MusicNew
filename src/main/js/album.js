@@ -206,11 +206,7 @@ console.log("onDataCellClick mySortBy:" + mySortBy);
 		console.log("onSubmitVolume: value=" + value);
 		client({
 			method: 'GET',
-<<<<<<< HEAD
 			path: "volume?id=" + value,
-=======
-			path: "playmode?id=" + value,
->>>>>>> d7ab8d03eecfda1916bfee32a400fc9ddadb685f
 //			path: "playalbum",
 //			id: albumID,
 //			entity: newAlbum,
