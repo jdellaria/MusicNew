@@ -9,6 +9,7 @@ nohup ./mvnw spring-boot:run  &
 
 to creat an executable jar file:
 mvn package
+(May have to delete directories under .m2/repository, Last time I got an error and removing directory and rerunning fixed the problem)
 
 to run the jar file - from the target directory
 java -jar MusicWebSite-0.0.1-SNAPSHOT.jar
