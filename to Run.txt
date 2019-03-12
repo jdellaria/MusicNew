@@ -6,3 +6,9 @@ http://localhost:8080/
 
 
 nohup ./mvnw spring-boot:run  &
+
+to creat an executable jar file:
+mvn package
+
+to run the jar file - from the target directory
+java -jar MusicWebSite-0.0.1-SNAPSHOT.jar
