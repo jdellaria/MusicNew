@@ -16,7 +16,7 @@ java -jar MusicWebSite-0.0.1-SNAPSHOT.jar
 
 To start the application automaicially from boot. Make sure musicServer.sh is working by typing: ./musicServer.sh start -> music should start playing
 
-chmod u+x runMusicWeb.sh 
+chmod +x runMusicWeb.sh 
 
 -->copy runMusicWeb.sh to /etc/init.d
 
